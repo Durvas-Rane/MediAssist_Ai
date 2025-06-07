@@ -2,5 +2,5 @@ streamlit
 google-generativeai
 SpeechRecognition
 pillow
-pyaudio
 python-dotenv
+streamlit-webrtc
