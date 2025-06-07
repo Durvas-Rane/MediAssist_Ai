@@ -107,8 +107,7 @@ def process_user_query(query):
 
 
 # Load local image
-logo = Image.open(r"D:\AI Healthcare Chatbot GP 123 - Copy\AI Healthcare Chatbot GP 123 - Copy\AI Healthcare Chatbot GP 123\logo.png")
-
+logo = Image.open("logo.png")
 
 # Chat header with logo and team info
 col1, col2 = st.columns([1, 5])
