@@ -1,6 +1,7 @@
 streamlit
-google-generativeai
-SpeechRecognition
-pillow
-python-dotenv
 streamlit-webrtc
+google-generativeai
+SpeechRecognition==3.10.0
+scipy
+numpy
+Pillow
