@@ -2,10 +2,10 @@ import os
 import google.generativeai as genai
 import speech_recognition as sr
 
-# Configure the API key
+# Configure Gemini API key
 genai.configure(api_key="AIzaSyBS6htjBkIlunE1wbnzcpN4Jjd-ybPje8w")
 
-# Create the model
+# Set generation configuration
 generation_config = {
     "temperature": 1,
     "top_p": 0.95,
@@ -14,18 +14,17 @@ generation_config = {
     "response_mime_type": "text/plain",
 }
 
+# Initialize Gemini model
 model = genai.GenerativeModel(
     model_name="gemini-1.5-flash",
     generation_config=generation_config,
 )
 
-# Function to generate response
+# Generate response based on prompt
 def GenerateResponse(input_text):
     response = model.generate_content([
         "YOU ARE A HEALTHCARE CHATBOT, SO REPLY ACCORDINGLY",
         "input: who are you",
-        "output: I Am An AI Healthcare Chatbot Made By Group 123",
-        "input: who are you?",
         "output: I Am An AI Healthcare Chatbot Made By Group 123",
         "input: who made you",
         "output: Ayushman, Ajinkya, Wanshika, Durvas, Shree Ram",
@@ -34,13 +33,11 @@ def GenerateResponse(input_text):
     ])
     return response.text
 
-# Function to capture audio input and convert to text
-def listen():
+# Transcribe from an uploaded/recorded audio file
+def listen_from_file(audio_path):
     recognizer = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("Listening... Please speak your question.")
-        recognizer.adjust_for_ambient_noise(source)
-        audio = recognizer.listen(source)
+    with sr.AudioFile(audio_path) as source:
+        audio = recognizer.record(source)
 
     try:
         text = recognizer.recognize_google(audio)
@@ -49,9 +46,3 @@ def listen():
         return "Sorry, I couldn't understand what you said."
     except sr.RequestError:
         return "Sorry, there was an error with the speech recognition service."
-
-
-
-# while True:
-#     string= str(input("Enter Your Prompt: "))
-#     print("Bot: ", GenerateResponse(string))
