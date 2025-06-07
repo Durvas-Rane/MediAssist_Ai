@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 import time
 import backend
-from streamlit_webrtc import webrtc_streamer, WebRtcMode
+from streamlit_webrtc import webrtc_streamer, WebRtcMode, ClientSettings
 import av
 import queue
 import numpy as np
@@ -114,10 +114,12 @@ with chat_tab:
     ctx = webrtc_streamer(
         key="speech",
         mode=WebRtcMode.SENDONLY,
+        client_settings=ClientSettings(
+            rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
+            media_stream_constraints={"video": False, "audio": True},
+        ),
         audio_receiver_size=256,
-        in_audio=True,
-        media_stream_constraints={"audio": True, "video": False},
-        audio_frame_callback=audio_callback
+        audio_frame_callback=audio_callback,
     )
 
     if ctx and ctx.state.playing:
